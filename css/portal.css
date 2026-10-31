@@ -1,0 +1,110 @@
+:root {
+  --bg: #0f0f1a;
+  --panel: #1a1a2e;
+  --text: #f1f1f8;
+  --muted: #a3a3c2;
+  --accent: #7c5cff;
+  --radius: 18px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: radial-gradient(circle at 20% 0%, #2a1f5c 0%, var(--bg) 55%) fixed;
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero {
+  text-align: center;
+  padding: 3rem 1.25rem 1.5rem;
+}
+.hero h1 { margin: 0 0 .5rem; font-size: clamp(2rem, 6vw, 3.2rem); }
+.hero p { margin: 0 0 1.5rem; color: var(--muted); }
+
+#buscar {
+  width: min(480px, 100%);
+  padding: .85rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid #33334d;
+  background: var(--panel);
+  color: var(--text);
+  font-size: 1rem;
+  outline: none;
+}
+#buscar:focus { border-color: var(--accent); }
+
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+.chip {
+  border: 1px solid #33334d;
+  background: transparent;
+  color: var(--muted);
+  padding: .4rem .9rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: .9rem;
+}
+.chip.activo { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+main { flex: 1; width: min(1100px, 100%); margin: 0 auto; padding: 1rem 1.25rem 2rem; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.25rem;
+}
+
+.card {
+  --c: var(--accent);
+  display: flex;
+  flex-direction: column;
+  background: var(--panel);
+  border-radius: var(--radius);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid #2a2a44;
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+.card:hover, .card:focus-visible {
+  transform: translateY(-4px);
+  border-color: var(--c);
+  box-shadow: 0 10px 30px -10px var(--c);
+}
+.card-emoji {
+  font-size: 3rem;
+  text-align: center;
+  padding: 1.6rem 0;
+  background: linear-gradient(135deg, var(--c), transparent 140%);
+}
+.card-body { padding: 1rem 1.1rem .5rem; flex: 1; }
+.card-cat { font-size: .75rem; text-transform: uppercase; letter-spacing: .08em; color: var(--c); font-weight: 600; }
+.card h2 { margin: .3rem 0 .4rem; font-size: 1.2rem; }
+.card p { margin: 0; color: var(--muted); font-size: .92rem; line-height: 1.4; }
+.card-play { padding: .8rem 1.1rem 1.1rem; font-weight: 600; color: var(--c); }
+
+.vacio { text-align: center; color: var(--muted); }
+
+footer { text-align: center; color: var(--muted); font-size: .85rem; padding: 1.5rem; }
+
+/* Barra superior compartida por las páginas de los juegos */
+.game-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: .9rem 1.25rem;
+  background: rgba(26, 26, 46, .85);
+  border-bottom: 1px solid #2a2a44;
+}
+.game-bar a { color: var(--text); text-decoration: none; font-weight: 600; }
+.game-bar h1 { margin: 0; font-size: 1.1rem; color: var(--muted); font-weight: 500; }

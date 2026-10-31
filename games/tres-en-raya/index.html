@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tres en raya · Portal de Juegos</title>
+  <link rel="stylesheet" href="../../css/portal.css">
+  <style>
+    .wrap { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 1.5rem 1rem; gap: 1rem; }
+    .modos { display: flex; gap: .5rem; }
+    .estado { font-size: 1.25rem; min-height: 1.6em; text-align: center; }
+    .tablero { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 8px; width: min(340px, 90vw); aspect-ratio: 1; }
+    .casilla {
+      background: var(--panel); border: 1px solid #2a2a44; border-radius: 14px;
+      font-size: clamp(2.5rem, 12vw, 4rem); font-weight: 700; color: var(--text);
+      cursor: pointer; display: grid; place-items: center; transition: background .15s;
+    }
+    .casilla:hover:not(:disabled) { background: #24243d; }
+    .casilla.x { color: #ff6b8b; }
+    .casilla.o { color: #4dd4ff; }
+    .casilla.gana { background: #2f2a55; border-color: var(--accent); }
+    .marcador { display: flex; gap: 1.5rem; color: var(--muted); }
+    .marcador b { color: var(--text); }
+    .btn { background: var(--accent); color: #fff; border: 0; padding: .7rem 1.4rem; border-radius: 999px; font-size: 1rem; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <nav class="game-bar">
+    <a href="../../">← Portal</a>
+    <h1>Tres en raya</h1>
+  </nav>
+
+  <div class="wrap">
+    <div class="modos">
+      <button class="chip activo" data-modo="cpu">Contra la máquina</button>
+      <button class="chip" data-modo="2j">2 jugadores</button>
+    </div>
+    <div class="estado" id="estado"></div>
+    <div class="tablero" id="tablero"></div>
+    <div class="marcador">
+      <span>❌ <b id="sx">0</b></span>
+      <span>Empates <b id="se">0</b></span>
+      <span>⭕ <b id="so">0</b></span>
+    </div>
+    <button class="btn" id="reiniciar">Nueva partida</button>
+  </div>
+
+  <script>
+    const LINEAS = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+    const tablero = document.getElementById("tablero");
+    const estado = document.getElementById("estado");
+    const puntos = { X: 0, O: 0, E: 0 };
+    let celdas, turno, fin, modo = "cpu";
+
+    function ganador(b) {
+      for (const l of LINEAS) {
+        const [a, c, d] = l;
+        if (b[a] && b[a] === b[c] && b[a] === b[d]) return { jugador: b[a], linea: l };
+      }
+      return b.every(Boolean) ? { jugador: "E" } : null;
+    }
+
+    // Minimax: la máquina juega perfecto, pero a veces se equivoca para que se pueda ganar
+    function minimax(b, jug) {
+      const r = ganador(b);
+      if (r) return { score: r.jugador === "O" ? 10 : r.jugador === "X" ? -10 : 0 };
+      const movs = [];
+      b.forEach((v, i) => {
+        if (v) return;
+        b[i] = jug;
+        movs.push({ i, score: minimax(b, jug === "O" ? "X" : "O").score });
+        b[i] = null;
+      });
+      return movs.reduce((m, x) => (jug === "O" ? x.score > m.score : x.score < m.score) ? x : m);
+    }
+
+    function jugadaCpu() {
+      const libres = celdas.map((v, i) => v ? null : i).filter((i) => i !== null);
+      if (Math.random() < 0.2) return libres[Math.floor(Math.random() * libres.length)];
+      return minimax([...celdas], "O").i;
+    }
+
+    function nueva() {
+      celdas = Array(9).fill(null);
+      turno = "X";
+      fin = false;
+      pintar();
+    }
+
+    function mover(i) {
+      if (fin || celdas[i]) return;
+      celdas[i] = turno;
+      const r = ganador(celdas);
+      if (r) {
+        fin = true;
+        puntos[r.jugador]++;
+        pintar(r);
+        return;
+      }
+      turno = turno === "X" ? "O" : "X";
+      pintar();
+      if (modo === "cpu" && turno === "O") setTimeout(() => mover(jugadaCpu()), 350);
+    }
+
+    function pintar(r) {
+      tablero.innerHTML = "";
+      celdas.forEach((v, i) => {
+        const b = document.createElement("button");
+        b.className = "casilla" + (v ? " " + v.toLowerCase() : "") + (r?.linea?.includes(i) ? " gana" : "");
+        b.textContent = v === "X" ? "✕" : v === "O" ? "○" : "";
+        b.disabled = !!v || fin || (modo === "cpu" && turno === "O");
+        b.setAttribute("aria-label", `Casilla ${i + 1}`);
+        b.addEventListener("click", () => mover(i));
+        tablero.appendChild(b);
+      });
+      if (r) estado.textContent = r.jugador === "E" ? "¡Empate!" : modo === "cpu" ? (r.jugador === "X" ? "¡Has ganado! 🎉" : "Gana la máquina 🤖") : `¡Gana ${r.jugador === "X" ? "❌" : "⭕"}! 🎉`;
+      else estado.textContent = modo === "cpu" ? (turno === "X" ? "Tu turno (❌)" : "Pensando…") : `Turno de ${turno === "X" ? "❌" : "⭕"}`;
+      document.getElementById("sx").textContent = puntos.X;
+      document.getElementById("so").textContent = puntos.O;
+      document.getElementById("se").textContent = puntos.E;
+    }
+
+    document.querySelectorAll("[data-modo]").forEach((b) =>
+      b.addEventListener("click", () => {
+        modo = b.dataset.modo;
+        document.querySelectorAll("[data-modo]").forEach((x) => x.classList.toggle("activo", x === b));
+        puntos.X = puntos.O = puntos.E = 0;
+        nueva();
+      })
+    );
+    document.getElementById("reiniciar").addEventListener("click", nueva);
+    nueva();
+  </script>
+</body>
+</html>

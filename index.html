@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal de Juegos</title>
+  <meta name="description" content="Una colección de juegos para jugar en el navegador.">
+  <link rel="stylesheet" href="css/portal.css">
+</head>
+<body>
+  <header class="hero">
+    <h1>🎮 Portal de Juegos</h1>
+    <p>Elige un juego y empieza a jugar. ¡Se añaden nuevos poco a poco!</p>
+    <input id="buscar" type="search" placeholder="Buscar juego…" autocomplete="off" aria-label="Buscar juego">
+    <div id="filtros" class="filtros"></div>
+  </header>
+
+  <main>
+    <section id="lista" class="grid" aria-live="polite"></section>
+    <p id="vacio" class="vacio" hidden>No se encontró ningún juego.</p>
+  </main>
+
+  <footer>
+    <p><span id="total"></span> · Hecho con cariño</p>
+  </footer>
+
+  <script src="js/games.js"></script>
+  <script src="js/portal.js"></script>
+</body>
+</html>
