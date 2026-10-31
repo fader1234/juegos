@@ -8,7 +8,7 @@ Disponible en 🇪🇸 español, 🇬🇧 inglés, 🇮🇹 italiano y 🇷🇺 
 | Juego | Categoría | Contra la computadora |
 |-------|-----------|:---:|
 | Escoba de 15 (baraja napolitana) | Cartas | ✅ 3 niveles |
-| Tres en raya | Estrategia | ✅ |
+| Tatetí | Estrategia | ✅ |
 
 ## Estructura
 

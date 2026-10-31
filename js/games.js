@@ -36,7 +36,7 @@ const GAMES = [
     categoria: "estrategia",
     color: "#7c5cff",
     titulo: {
-      es: "Tres en raya",
+      es: "Tatetí",
       en: "Tic-tac-toe",
       it: "Tris",
       ru: "Крестики-нолики",
