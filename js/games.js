@@ -12,6 +12,25 @@ const CATEGORIAS = {
 
 const GAMES = [
   {
+    id: "ajedrez",
+    imagen: "games/ajedrez/thumb.png",
+    emoji: "♞",
+    categoria: "estrategia",
+    color: "#a8323f",
+    titulo: {
+      es: "Ajedrez de las novelas",
+      en: "Novel Chess",
+      it: "Scacchi dei romanzi",
+      ru: "Шахматы с героями романов",
+    },
+    descripcion: {
+      es: "Desafía a los personajes de Litmir: Natalia, Roberto, Natasha y Luis, cada uno más fuerte que el anterior.",
+      en: "Challenge the Litmir characters: Natalia, Roberto, Natasha and Luis, each stronger than the last.",
+      it: "Sfida i personaggi di Litmir: Natalia, Roberto, Nataša e Luis, ognuno più forte del precedente.",
+      ru: "Сразитесь с героями Litmir: Натальей, Роберто, Наташей и Луисом — каждый сильнее предыдущего.",
+    },
+  },
+  {
     id: "escoba",
     imagen: "games/escoba/thumb.svg",
     emoji: "🃏",

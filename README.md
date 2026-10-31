@@ -7,6 +7,7 @@ Disponible en 🇪🇸 español, 🇬🇧 inglés, 🇮🇹 italiano y 🇷🇺 
 
 | Juego | Categoría | Contra la computadora |
 |-------|-----------|:---:|
+| Ajedrez de las novelas (personajes de Litmir) | Estrategia | ✅ 4 rivales |
 | Escoba de 15 (baraja napolitana) | Cartas | ✅ 3 niveles |
 | Tatetí | Estrategia | ✅ |
 
@@ -32,3 +33,8 @@ games/<id>/           Cada juego en su carpeta
 
 En GitHub: **Settings → Pages → Branch: `main` / `(root)` → Save**.
 El portal quedará en `https://fader1234.github.io/juegos/`.
+
+## Créditos
+
+- Personajes e imágenes del ajedrez: novelas de [Litmir](https://github.com/luisfader/litmir).
+- Motor de ajedrez: `chess-engine.js` del sitio Litmir.
