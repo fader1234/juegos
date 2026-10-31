@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tres en raya · Portal de Juegos</title>
+  <title>Tres en raya</title>
   <link rel="stylesheet" href="../../css/portal.css">
   <style>
     .wrap { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 1.5rem 1rem; gap: 1rem; }
@@ -26,26 +26,39 @@
 </head>
 <body>
   <nav class="game-bar">
-    <a href="../../">← Portal</a>
-    <h1>Tres en raya</h1>
+    <a href="../../" data-i18n="back"></a>
+    <h1 data-i18n="title"></h1>
+    <span class="spacer"></span>
+    <span id="lang"></span>
   </nav>
 
   <div class="wrap">
     <div class="modos">
-      <button class="chip activo" data-modo="cpu">Contra la máquina</button>
-      <button class="chip" data-modo="2j">2 jugadores</button>
+      <button class="chip activo" data-modo="cpu" data-i18n="vsCpu"></button>
+      <button class="chip" data-modo="2j" data-i18n="twoP"></button>
     </div>
     <div class="estado" id="estado"></div>
     <div class="tablero" id="tablero"></div>
     <div class="marcador">
       <span>❌ <b id="sx">0</b></span>
-      <span>Empates <b id="se">0</b></span>
+      <span><span data-i18n="draws"></span> <b id="se">0</b></span>
       <span>⭕ <b id="so">0</b></span>
     </div>
-    <button class="btn" id="reiniciar">Nueva partida</button>
+    <button class="btn" id="reiniciar" data-i18n="newGame"></button>
   </div>
 
+  <script src="../../js/i18n.js"></script>
   <script>
+    I18N.add({
+      es: { pageTitle: "Tres en raya · Portal de Juegos", title: "Tres en raya", vsCpu: "Contra la máquina", twoP: "2 jugadores", draws: "Empates", newGame: "Nueva partida", draw: "¡Empate!", youWin: "¡Has ganado! 🎉", cpuWins: "Gana la máquina 🤖", wins: "¡Gana {p}! 🎉", yourTurn: "Tu turno (❌)", thinking: "Pensando…", turnOf: "Turno de {p}", cell: "Casilla {n}" },
+      en: { pageTitle: "Tic-tac-toe · Games Portal", title: "Tic-tac-toe", vsCpu: "Vs computer", twoP: "2 players", draws: "Draws", newGame: "New game", draw: "It's a draw!", youWin: "You win! 🎉", cpuWins: "The computer wins 🤖", wins: "{p} wins! 🎉", yourTurn: "Your turn (❌)", thinking: "Thinking…", turnOf: "{p}'s turn", cell: "Square {n}" },
+      it: { pageTitle: "Tris · Portale dei Giochi", title: "Tris", vsCpu: "Contro il computer", twoP: "2 giocatori", draws: "Pareggi", newGame: "Nuova partita", draw: "Pareggio!", youWin: "Hai vinto! 🎉", cpuWins: "Vince il computer 🤖", wins: "Vince {p}! 🎉", yourTurn: "Tocca a te (❌)", thinking: "Sto pensando…", turnOf: "Tocca a {p}", cell: "Casella {n}" },
+      ru: { pageTitle: "Крестики-нолики · Портал игр", title: "Крестики-нолики", vsCpu: "Против компьютера", twoP: "2 игрока", draws: "Ничьи", newGame: "Новая игра", draw: "Ничья!", youWin: "Вы победили! 🎉", cpuWins: "Победил компьютер 🤖", wins: "Победили {p}! 🎉", yourTurn: "Ваш ход (❌)", thinking: "Думаю…", turnOf: "Ходят {p}", cell: "Клетка {n}" },
+    });
+    I18N.mount(document.getElementById("lang"));
+    I18N.apply();
+    I18N.onChange(() => pintar(ultimo));
+    let ultimo = null;
     const LINEAS = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
     const tablero = document.getElementById("tablero");
     const estado = document.getElementById("estado");
@@ -109,12 +122,14 @@
         b.className = "casilla" + (v ? " " + v.toLowerCase() : "") + (r?.linea?.includes(i) ? " gana" : "");
         b.textContent = v === "X" ? "✕" : v === "O" ? "○" : "";
         b.disabled = !!v || fin || (modo === "cpu" && turno === "O");
-        b.setAttribute("aria-label", `Casilla ${i + 1}`);
+        b.setAttribute("aria-label", I18N.t("cell", { n: i + 1 }));
         b.addEventListener("click", () => mover(i));
         tablero.appendChild(b);
       });
-      if (r) estado.textContent = r.jugador === "E" ? "¡Empate!" : modo === "cpu" ? (r.jugador === "X" ? "¡Has ganado! 🎉" : "Gana la máquina 🤖") : `¡Gana ${r.jugador === "X" ? "❌" : "⭕"}! 🎉`;
-      else estado.textContent = modo === "cpu" ? (turno === "X" ? "Tu turno (❌)" : "Pensando…") : `Turno de ${turno === "X" ? "❌" : "⭕"}`;
+      ultimo = r || null;
+      const T = I18N.t;
+      if (r) estado.textContent = r.jugador === "E" ? T("draw") : modo === "cpu" ? (r.jugador === "X" ? T("youWin") : T("cpuWins")) : T("wins", { p: r.jugador === "X" ? "❌" : "⭕" });
+      else estado.textContent = modo === "cpu" ? (turno === "X" ? T("yourTurn") : T("thinking")) : T("turnOf", { p: turno === "X" ? "❌" : "⭕" });
       document.getElementById("sx").textContent = puntos.X;
       document.getElementById("so").textContent = puntos.O;
       document.getElementById("se").textContent = puntos.E;

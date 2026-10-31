@@ -93,7 +93,24 @@ main { flex: 1; width: min(1100px, 100%); margin: 0 auto; padding: 1rem 1.25rem 
 .card p { margin: 0; color: var(--muted); font-size: .92rem; line-height: 1.4; }
 .card-play { padding: .8rem 1.1rem 1.1rem; font-weight: 600; color: var(--c); }
 
+.card-emoji img { height: 96px; display: block; margin: -.4rem auto; filter: drop-shadow(0 6px 10px rgba(0,0,0,.35)); }
+
 .vacio { text-align: center; color: var(--muted); }
+
+/* Selector de idioma */
+.top-lang { position: absolute; top: .9rem; right: 1rem; }
+.lang-select {
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid #33334d;
+  border-radius: 999px;
+  padding: .4rem .7rem;
+  font-size: .9rem;
+  cursor: pointer;
+  max-width: 9.5rem;
+}
+.lang-select:focus { outline: 2px solid var(--accent); }
+@media (max-width: 480px) { .hero { padding-top: 3.6rem; } }
 
 footer { text-align: center; color: var(--muted); font-size: .85rem; padding: 1.5rem; }
 
@@ -107,4 +124,14 @@ footer { text-align: center; color: var(--muted); font-size: .85rem; padding: 1.
   border-bottom: 1px solid #2a2a44;
 }
 .game-bar a { color: var(--text); text-decoration: none; font-weight: 600; }
-.game-bar h1 { margin: 0; font-size: 1.1rem; color: var(--muted); font-weight: 500; }
+.game-bar h1 { margin: 0; font-size: 1.1rem; color: var(--muted); font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.game-bar .spacer { flex: 1; }
+.game-bar .icon-btn {
+  background: transparent; color: var(--text); border: 1px solid #33334d;
+  width: 2.2rem; height: 2.2rem; border-radius: 50%; font-size: 1rem; cursor: pointer; flex: none;
+}
+.game-bar .icon-btn:hover { border-color: var(--accent); }
+@media (max-width: 480px) {
+  .game-bar { gap: .5rem; padding: .7rem .8rem; }
+  .game-bar .lang-select { max-width: 6.2rem; padding: .35rem .4rem; font-size: .8rem; }
+}

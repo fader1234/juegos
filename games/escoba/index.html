@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0f0f1a">
+  <title>Escoba de 15</title>
+  <link rel="stylesheet" href="../../css/portal.css">
+  <link rel="stylesheet" href="escoba.css">
+</head>
+<body>
+  <nav class="game-bar">
+    <a href="../../" data-i18n="back"></a>
+    <h1 data-i18n="title"></h1>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnRules" data-i18n-aria="rules">?</button>
+    <button class="icon-btn" id="btnNew" data-i18n-aria="newGame">↻</button>
+    <span id="lang"></span>
+  </nav>
+
+  <div class="game">
+    <div class="scoreboard">
+      <div class="sb-player" id="sbP"><span data-i18n="you"></span><b id="ptsP">0</b></div>
+      <div class="sb-mid"><span id="targetLbl"></span><span id="deckLbl"></span></div>
+      <div class="sb-player" id="sbC"><b id="ptsC">0</b><span data-i18n="cpu"></span></div>
+    </div>
+
+    <div class="row opp">
+      <div class="pile" id="pileC"></div>
+      <div class="hand hand-opp" id="oppHand"></div>
+      <div class="pile-spacer"></div>
+    </div>
+
+    <div class="felt"><div class="table" id="table"></div></div>
+
+    <div class="msg">
+      <div id="info" class="info"></div>
+      <div id="prompt" class="prompt"></div>
+    </div>
+
+    <div class="controls">
+      <button class="btn ghost" id="btnHint">💡 <span data-i18n="hint"></span></button>
+      <span class="sum" id="sum"></span>
+      <button class="btn" id="btnDiscard" data-i18n="discard"></button>
+      <button class="btn primary" id="btnCapture" data-i18n="capture"></button>
+    </div>
+
+    <div class="row me">
+      <div class="pile" id="pileP"></div>
+      <div class="hand hand-me" id="myHand"></div>
+      <div class="pile-spacer"></div>
+    </div>
+  </div>
+
+  <div class="modal" id="modal" hidden><div class="modal-box" id="modalBox" role="dialog" aria-modal="true"></div></div>
+  <div class="banner" id="banner" hidden></div>
+
+  <script src="../../js/i18n.js"></script>
+  <script src="strings.js"></script>
+  <script src="cards.js"></script>
+  <script src="escoba.js"></script>
+</body>
+</html>
