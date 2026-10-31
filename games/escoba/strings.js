@@ -34,6 +34,10 @@ I18N.add({
     cardName: "{rank} de {suit}",
     rank1: "As", rank8: "Sota", rank9: "Caballo", rank10: "Rey",
     suit_d: "Oros", suit_c: "Copas", suit_s: "Espadas", suit_b: "Bastos",
+    soplar: "🌬️ ¡Soplar!",
+    soploAvail: "¡La computadora pudo levantar con {card} y no lo hizo! Puedes soplar y llevarte esas cartas.",
+    cpuSopla: "¡Te soplaron! Podías levantar con {card}: la computadora se lleva {n} cartas.",
+    youSopla: "¡Soplaste! Te llevas {card} y {n} cartas en total.",
     rulesHtml: `
       <h3>🎯 Objetivo</h3>
       <p>Ser el primero en llegar a los puntos de la partida (15, 21 o 30).</p>
@@ -46,6 +50,10 @@ I18N.add({
       <h3>🧹 Escoba</h3>
       <p>Si te llevas <b>todas</b> las cartas de la mesa haces una escoba, que vale 1 punto.
       Si las 4 cartas iniciales suman 15 (o 30), el que reparte hace escoba (o dos).</p>
+      <h3>🌬️ Soplar</h3>
+      <p>Si un jugador tira a la mesa una carta con la que podía sumar 15, el rival puede <b>soplar</b> al empezar su turno:
+      se lleva esa carta y las que sumaban 15 con ella (no cuenta como escoba), y después juega normalmente.
+      La computadora también te puede soplar, ¡así que atento!</p>
       <h3>🏆 Puntos al final de cada mano</h3>
       <ul>
         <li>Cada escoba: <b>1</b></li>
@@ -95,6 +103,10 @@ I18N.add({
     cardName: "{rank} of {suit}",
     rank1: "Ace", rank8: "Jack", rank9: "Knight", rank10: "King",
     suit_d: "Coins", suit_c: "Cups", suit_s: "Swords", suit_b: "Clubs",
+    soplar: "🌬️ Blow! (soplar)",
+    soploAvail: "The computer could have captured with {card} and didn't! Blow to take those cards.",
+    cpuSopla: "You got blown! You could have captured with {card}: the computer takes {n} cards.",
+    youSopla: "You blew! You take {card} — {n} cards in total.",
     rulesHtml: `
       <h3>🎯 Goal</h3>
       <p>Be the first to reach the match target (15, 21 or 30 points).</p>
@@ -107,6 +119,10 @@ I18N.add({
       <h3>🧹 Escoba (sweep)</h3>
       <p>If you take <b>all</b> the cards on the table you make an escoba, worth 1 point.
       If the 4 starting table cards add up to 15 (or 30), the dealer makes one (or two) escobas.</p>
+      <h3>🌬️ Blowing (soplar)</h3>
+      <p>If a player plays a card to the table that could have made 15, the opponent may <b>blow</b> at the start of their turn:
+      they take that card plus the cards that made 15 with it (it doesn't count as an escoba), then play normally.
+      The computer can blow on you too, so watch out!</p>
       <h3>🏆 Points at the end of each hand</h3>
       <ul>
         <li>Each escoba: <b>1</b></li>
@@ -156,6 +172,10 @@ I18N.add({
     cardName: "{rank} di {suit}",
     rank1: "Asso", rank8: "Fante", rank9: "Cavallo", rank10: "Re",
     suit_d: "Denari", suit_c: "Coppe", suit_s: "Spade", suit_b: "Bastoni",
+    soplar: "🌬️ Soffia!",
+    soploAvail: "Il computer poteva prendere con {card} e non l'ha fatto! Soffia e prendi quelle carte.",
+    cpuSopla: "Ti hanno soffiato! Potevi prendere con {card}: il computer prende {n} carte.",
+    youSopla: "Hai soffiato! Prendi {card}, {n} carte in tutto.",
     rulesHtml: `
       <h3>🎯 Obiettivo</h3>
       <p>Arrivare per primi al punteggio della partita (15, 21 o 30 punti).</p>
@@ -168,6 +188,10 @@ I18N.add({
       <h3>🧹 Scopa</h3>
       <p>Se prendi <b>tutte</b> le carte in tavola fai scopa, che vale 1 punto.
       Se le 4 carte iniziali fanno 15 (o 30), il mazziere fa scopa (o due).</p>
+      <h3>🌬️ Soffiare</h3>
+      <p>Se un giocatore cala in tavola una carta con cui poteva fare 15, l'avversario può <b>soffiare</b> all'inizio del suo turno:
+      prende quella carta e quelle che facevano 15 con lei (non vale come scopa), poi gioca normalmente.
+      Anche il computer può soffiarti le carte, quindi attenzione!</p>
       <h3>🏆 Punti alla fine di ogni mano</h3>
       <ul>
         <li>Ogni scopa: <b>1</b></li>
@@ -217,6 +241,10 @@ I18N.add({
     cardName: "{rank} {suit}",
     rank1: "Туз", rank8: "Валет", rank9: "Всадник", rank10: "Король",
     suit_d: "монет", suit_c: "кубков", suit_s: "мечей", suit_b: "жезлов",
+    soplar: "🌬️ Сдуть!",
+    soploAvail: "Компьютер мог забрать карты ({card}), но не забрал! Нажмите «Сдуть» и заберите их себе.",
+    cpuSopla: "Вас «сдули»! Вы могли забрать карты ({card}) — компьютер забирает карт: {n}.",
+    youSopla: "Вы сдули! Вы забираете {card} — всего карт: {n}.",
     rulesHtml: `
       <h3>🎯 Цель</h3>
       <p>Первым набрать нужное количество очков (15, 21 или 30).</p>
@@ -229,6 +257,10 @@ I18N.add({
       <h3>🧹 Эскоба</h3>
       <p>Если вы забираете <b>все</b> карты со стола, это эскоба — 1 очко.
       Если 4 начальные карты на столе дают в сумме 15 (или 30), сдающий получает эскобу (или две).</p>
+      <h3>🌬️ «Сдуть» (soplar)</h3>
+      <p>Если игрок кладёт на стол карту, которой мог набрать 15, соперник в начале своего хода может её <b>«сдуть»</b>:
+      он забирает эту карту и карты, дававшие с ней 15 (это не считается эскобой), а затем ходит как обычно.
+      Компьютер тоже может «сдуть» ваши карты, так что будьте внимательны!</p>
       <h3>🏆 Очки в конце каждой раздачи</h3>
       <ul>
         <li>Каждая эскоба: <b>1</b></li>

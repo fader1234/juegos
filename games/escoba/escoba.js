@@ -35,6 +35,7 @@
     flash: false,
     modals: [],
     seen: new Set(),
+    soplo: null, // { who, card, combos } jugada que el rival puede soplar
   };
 
   try {
@@ -152,10 +153,24 @@
     let sc = 0;
 
     if (taken.length) {
-      sc += worth(card) + taken.reduce((a, c) => a + worth(c), 0);
+      // +1 por carta: llevarse cartas ahora vale (punto de cartas y deja menos al rival)
+      sc += worth(card) + taken.reduce((a, c) => a + worth(c), 0) + (taken.length + 1);
       if (!rest.length) sc += ESCOBA; // ¡escoba!
     } else {
-      rest.push(card);
+      const cs = finalMove ? [] : combos(S.table, card.v);
+      if (cs.length) {
+        // Podía levantar y no lo hace: el rival sopla y se lleva la carta + la mejor combinación
+        let bi = cs[0], bw = -1;
+        for (const ti of cs) {
+          const w = ti.reduce((a, i) => a + worth(S.table[i]), 0);
+          if (w > bw) { bw = w; bi = ti; }
+        }
+        sc -= worth(card) + bw + 3;
+        rest.length = 0;
+        S.table.forEach((c, i) => { if (!bi.includes(i)) rest.push(c); });
+      } else {
+        rest.push(card);
+      }
     }
 
     if (finalMove) {
@@ -219,6 +234,7 @@
     S.sel = { hand: null, table: new Set() };
     S.anim = null;
     S.seen = new Set();
+    S.soplo = null;
     S.hand = { p: [], c: [] };
     S.table = [];
     S.turn = other(S.dealer);
@@ -254,6 +270,18 @@
     if (id !== gameId) return;
     if (S.turn === "c") {
       S.busy = true;
+      if (S.soplo && S.soplo.who === "p") {
+        const chance = { easy: 0.5, normal: 0.9, hard: 1 }[S.diff];
+        if (Math.random() < chance) {
+          render();
+          await wait(500);
+          if (id !== gameId) return;
+          await doSoplo("c", id);
+          if (id !== gameId) return;
+          await wait(1400);
+          if (id !== gameId) return;
+        }
+      }
       S.info = () => t("cpuThinking");
       render();
       await wait(700 + Math.random() * 600);
@@ -276,6 +304,7 @@
     if (id !== gameId) return;
 
     S.hand[who].splice(mv.hi, 1);
+    S.soplo = null; // la oportunidad de soplar solo dura un turno
     let escoba = false;
     if (taken.length) {
       S.table = S.table.filter((c) => !taken.includes(c));
@@ -285,7 +314,9 @@
       S.info = who === "c" ? () => t("cpuCaptured", { card: cardName(card), n }) : () => t("youCaptured", { n });
       if (!S.table.length) { S.esc[who]++; escoba = true; }
     } else {
+      const missed = combos(S.table, card.v).map((ti) => ti.map((i) => S.table[i]));
       S.table.push(card);
+      if (missed.length) S.soplo = { who, card, combos: missed };
       S.info = who === "c" ? () => t("cpuDiscarded", { card: cardName(card) }) : () => t("youDiscarded", { card: cardName(card) });
     }
     S.anim = null;
@@ -293,6 +324,37 @@
     if (escoba) await banner(who);
     if (id !== gameId) return;
     await afterMove(id);
+  }
+
+  // Soplar: llevarse la carta que el rival tiró pudiendo levantar, más lo que sumaba 15
+  async function doSoplo(who, id) {
+    const so = S.soplo;
+    S.soplo = null;
+    if (!so) return;
+    let best = so.combos[0], bw = -1;
+    for (const cb of so.combos) {
+      const w = cb.reduce((a, c) => a + worth(c), 0);
+      if (w > bw) { bw = w; best = cb; }
+    }
+    const cards = [so.card, ...best];
+    if (!cards.every((c) => S.table.includes(c))) return;
+    const ids = cards.map((c) => c.id);
+    S.busy = true;
+    S.sel = { hand: null, table: new Set() };
+    S.anim = { taken: ids };
+    const n = cards.length;
+    S.info = who === "c"
+      ? () => t("cpuSopla", { card: cardName(so.card), n })
+      : () => t("youSopla", { card: cardName(so.card), n });
+    render();
+    await wait(1300);
+    if (id !== gameId) return;
+    S.table = S.table.filter((c) => !ids.includes(c.id));
+    S.cap[who].push(...cards);
+    S.last = who;
+    S.anim = null;
+    if (who === "p") S.busy = false;
+    render();
   }
 
   async function afterMove(id) {
@@ -470,7 +532,10 @@
     // Mensajes
     $("info").textContent = S.info ? S.info() : "";
     let prompt = "";
-    if (mine) prompt = S.flash ? t("pickFirst") : S.sel.hand === null ? t("pickHand") : t("pickTable");
+    const canSoplo = mine && S.soplo && S.soplo.who === "c";
+    $("btnSoplo").hidden = !canSoplo;
+    if (canSoplo) prompt = t("soploAvail", { card: cardName(S.soplo.card) });
+    else if (mine) prompt = S.flash ? t("pickFirst") : S.sel.hand === null ? t("pickHand") : t("pickTable");
     $("prompt").textContent = prompt;
 
     // Controles
@@ -612,6 +677,11 @@
   $("btnDiscard").addEventListener("click", () => {
     if (!myTurn() || S.sel.hand === null || S.sel.table.size) return;
     doMove("p", { hi: S.sel.hand, ti: [] }, gameId);
+  });
+
+  $("btnSoplo").addEventListener("click", () => {
+    if (!myTurn() || !S.soplo || S.soplo.who !== "c") return;
+    doSoplo("p", gameId);
   });
 
   $("btnHint").addEventListener("click", () => {
