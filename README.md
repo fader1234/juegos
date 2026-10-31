@@ -7,6 +7,7 @@ Disponible en 🇪🇸 español, 🇬🇧 inglés, 🇮🇹 italiano y 🇷🇺 
 
 | Juego | Categoría | Contra la computadora |
 |-------|-----------|:---:|
+| Bloques de Litmir (5 niveles con personajes) | Arcade | — |
 | Ajedrez de las novelas (personajes de Litmir) | Estrategia | ✅ 4 rivales |
 | Escoba de 15 (baraja napolitana) | Cartas | ✅ 3 niveles |
 | Tatetí | Estrategia | ✅ |
@@ -37,4 +38,5 @@ El portal quedará en `https://fader1234.github.io/juegos/`.
 ## Créditos
 
 - Personajes e imágenes del ajedrez: novelas de [Litmir](https://github.com/luisfader/litmir).
+- Imágenes de Bloques de Litmir: El tren fantasma, El misterio de los Fader y La hora salvaje (Litmir).
 - Motor de ajedrez: `chess-engine.js` del sitio Litmir.

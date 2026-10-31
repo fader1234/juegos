@@ -8,9 +8,29 @@
 const CATEGORIAS = {
   cartas: { es: "Cartas", en: "Cards", it: "Carte", ru: "Карты" },
   estrategia: { es: "Estrategia", en: "Strategy", it: "Strategia", ru: "Стратегия" },
+  arcade: { es: "Arcade", en: "Arcade", it: "Arcade", ru: "Аркады" },
 };
 
 const GAMES = [
+  {
+    id: "bloques",
+    imagen: "games/bloques/thumb.png",
+    emoji: "🧱",
+    categoria: "arcade",
+    color: "#e3b23c",
+    titulo: {
+      es: "Bloques de Litmir",
+      en: "Litmir Blocks",
+      it: "Blocchi di Litmir",
+      ru: "Блоки Litmir",
+    },
+    descripcion: {
+      es: "Encaja las piezas que caen en 5 niveles: del hombre gordo del tren fantasma hasta Natasha. Cada línea descubre al personaje.",
+      en: "Fit the falling pieces across 5 levels: from the ghost train's fat man to Natasha. Every line reveals the character.",
+      it: "Incastra i pezzi che cadono in 5 livelli: dall'uomo grasso del treno fantasma fino a Nataša. Ogni linea svela il personaggio.",
+      ru: "Укладывайте падающие фигуры на 5 уровнях: от толстяка из призрачного поезда до Наташи. Каждая линия открывает героя.",
+    },
+  },
   {
     id: "ajedrez",
     imagen: "games/ajedrez/thumb.png",

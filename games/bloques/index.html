@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#0d0b14">
+  <title>Bloques de Litmir</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/portal.css">
+  <link rel="stylesheet" href="bloques.css">
+</head>
+<body>
+  <div class="ambient" id="ambient"></div>
+
+  <nav class="game-bar">
+    <a href="../../" data-i18n="back"></a>
+    <h1 data-i18n="title"></h1>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnPause" data-i18n-aria="pause">⏸</button>
+    <button class="icon-btn" id="btnSound" data-i18n-aria="sound">🔊</button>
+    <span id="lang"></span>
+  </nav>
+
+  <main class="game">
+    <div class="hud-top">
+      <img class="avatar" id="lvlAvatar" alt="">
+      <div class="lvl-info">
+        <div class="lvl-name"><span id="lvlNum"></span> · <b id="lvlName"></b></div>
+        <div class="progress"><i id="lvlBar"></i></div>
+        <div class="lvl-lines"><span data-i18n="lines"></span> <b id="lvlLines">0/8</b></div>
+      </div>
+    </div>
+
+    <div class="play">
+      <div class="well" id="well">
+        <div class="reveal" id="reveal"></div>
+        <div class="veil" id="veil"></div>
+        <canvas id="board" aria-label="Board"></canvas>
+        <div class="overlay" id="overlay" hidden></div>
+      </div>
+
+      <aside class="side">
+        <div class="box">
+          <span data-i18n="next"></span>
+          <canvas id="next" width="80" height="180"></canvas>
+        </div>
+        <div class="box hold-box" id="holdBox" role="button" tabindex="0" data-i18n-aria="hold">
+          <span data-i18n="hold"></span>
+          <canvas id="hold" width="80" height="60"></canvas>
+        </div>
+        <div class="box stat"><span data-i18n="score"></span><b id="score">0</b></div>
+        <div class="box stat"><span data-i18n="best"></span><b id="best">0</b></div>
+      </aside>
+    </div>
+
+    <div class="pad" id="pad">
+      <button data-k="left" data-i18n-aria="left">◀</button>
+      <button data-k="rotate" data-i18n-aria="rotate">⟳</button>
+      <button data-k="right" data-i18n-aria="right">▶</button>
+      <button data-k="down" data-i18n-aria="down">▼</button>
+      <button data-k="drop" data-i18n-aria="drop">⤓</button>
+    </div>
+  </main>
+
+  <script src="../../js/i18n.js"></script>
+  <script src="strings.js"></script>
+  <script src="bloques.js"></script>
+</body>
+</html>
