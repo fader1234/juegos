@@ -13,6 +13,25 @@ const CATEGORIAS = {
 
 const GAMES = [
   {
+    id: "ladrillos",
+    imagen: "games/ladrillos/thumb.png",
+    emoji: "🧱",
+    categoria: "arcade",
+    color: "#4c6ef5",
+    titulo: {
+      es: "Ladrillos de Litmir",
+      en: "Litmir Bricks",
+      it: "Mattoncini di Litmir",
+      ru: "Кирпичики Litmir",
+    },
+    descripcion: {
+      es: "Un juego muy fácil: rompe los ladrillos con la pelota y descubre a seis personajes de las novelas.",
+      en: "A very easy game: break the bricks with the ball and reveal six characters from the novels.",
+      it: "Un gioco facilissimo: rompi i mattoncini con la pallina e scopri sei personaggi dei romanzi.",
+      ru: "Очень простая игра: разбивайте кирпичики мячом и открывайте шестерых героев романов.",
+    },
+  },
+  {
     id: "bloques",
     imagen: "games/bloques/thumb.png",
     emoji: "🧱",

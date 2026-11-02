@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#0d0b14">
+  <title>Ladrillos de Litmir</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/portal.css">
+  <link rel="stylesheet" href="ladrillos.css">
+</head>
+<body>
+  <div class="ambient" id="ambient"></div>
+
+  <nav class="game-bar">
+    <a href="../../" data-i18n="back"></a>
+    <h1 data-i18n="title"></h1>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnPause" data-i18n-aria="pause">⏸</button>
+    <button class="icon-btn" id="btnSound" data-i18n-aria="sound">🔊</button>
+    <span id="lang"></span>
+  </nav>
+
+  <main class="game">
+    <div class="hud">
+      <img class="avatar" id="avatar" alt="">
+      <div class="info">
+        <div class="lname"><span id="lvlNum"></span> · <b id="lvlName"></b></div>
+        <div class="lives" id="lives" data-i18n-aria="lives"></div>
+      </div>
+      <div class="score"><span data-i18n="score"></span><b id="score">0</b></div>
+    </div>
+
+    <div class="stage" id="stage">
+      <canvas id="cv"></canvas>
+      <div class="overlay" id="overlay" hidden></div>
+    </div>
+  </main>
+
+  <script src="../../js/i18n.js"></script>
+  <script src="strings.js"></script>
+  <script src="ladrillos.js"></script>
+</body>
+</html>

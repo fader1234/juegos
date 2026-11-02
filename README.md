@@ -7,6 +7,7 @@ Disponible en 🇪🇸 español, 🇬🇧 inglés, 🇮🇹 italiano y 🇷🇺 
 
 | Juego | Categoría | Contra la computadora |
 |-------|-----------|:---:|
+| Ladrillos de Litmir (muy fácil, 6 personajes) | Arcade | — |
 | Bloques de Litmir (5 niveles con personajes) | Arcade | — |
 | Ajedrez de las novelas (personajes de Litmir) | Estrategia | ✅ 4 rivales |
 | Escoba de 15 (baraja napolitana) | Cartas | ✅ 3 niveles |
