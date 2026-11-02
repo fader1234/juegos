@@ -14,6 +14,10 @@ const CATEGORIAS = {
 const GAMES = [
   {
     id: "ladrillos",
+    portada: "games/ladrillos/cover.jpg",
+    dificultad: 1,
+    nuevo: true,
+    meta: { es: "6 niveles · 6 personajes", en: "6 levels · 6 characters", it: "6 livelli · 6 personaggi", ru: "6 уровней · 6 героев" },
     imagen: "games/ladrillos/thumb.png",
     emoji: "🧱",
     categoria: "arcade",
@@ -33,6 +37,9 @@ const GAMES = [
   },
   {
     id: "bloques",
+    portada: "games/bloques/cover.jpg",
+    dificultad: 3,
+    meta: { es: "5 niveles · 5 personajes", en: "5 levels · 5 characters", it: "5 livelli · 5 personaggi", ru: "5 уровней · 5 героев" },
     imagen: "games/bloques/thumb.png",
     emoji: "🧱",
     categoria: "arcade",
@@ -52,6 +59,10 @@ const GAMES = [
   },
   {
     id: "ajedrez",
+    portada: "games/ajedrez/cover.jpg",
+    dificultad: 4,
+    rival: true,
+    meta: { es: "4 rivales · 3 tableros", en: "4 opponents · 3 boards", it: "4 avversari · 3 scacchiere", ru: "4 соперника · 3 доски" },
     imagen: "games/ajedrez/thumb.png",
     emoji: "♞",
     categoria: "estrategia",
@@ -71,6 +82,10 @@ const GAMES = [
   },
   {
     id: "escoba",
+    portada: "games/escoba/cover.jpg",
+    dificultad: 2,
+    rival: true,
+    meta: { es: "Baraja napolitana · 3 niveles", en: "Neapolitan deck · 3 levels", it: "Carte napoletane · 3 livelli", ru: "Неаполитанская колода · 3 уровня" },
     imagen: "games/escoba/thumb.svg",
     emoji: "🃏",
     categoria: "cartas",
@@ -90,6 +105,10 @@ const GAMES = [
   },
   {
     id: "tres-en-raya",
+    portada: "games/tres-en-raya/cover.jpg",
+    dificultad: 1,
+    rival: true,
+    meta: { es: "Contra la máquina o de a dos", en: "Vs computer or two players", it: "Contro il computer o in due", ru: "Против компьютера или вдвоём" },
     emoji: "❌⭕",
     categoria: "estrategia",
     color: "#7c5cff",

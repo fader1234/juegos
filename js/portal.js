@@ -1,126 +1,150 @@
+/* Portada del portal de juegos */
 (function () {
   I18N.add({
     es: {
-      pageTitle: "Portal de Juegos",
-      heroTitle: "🎮 Portal de Juegos",
-      heroSub: "Elige un juego y empieza a jugar. ¡Se añaden nuevos poco a poco!",
-      search: "Buscar juego…",
-      all: "Todos",
-      empty: "No se encontró ningún juego.",
-      play: "Jugar ▶",
-      footer: "Hecho con cariño",
-      count: ({ n }) => (n === 1 ? "1 juego" : `${n} juegos`),
+      pageTitle: "Sala de juegos · Robert Fader",
+      brand: "Sala de juegos",
+      eyebrow: "Juegos de las novelas",
+      lead: "Juega con los personajes de las novelas de Robert Fader. Gratis, en el navegador, sin instalar nada.",
+      all: "Todos", novels: "📚 Mundo literario →",
+      pickOfDay: "✦ Juego del día · {date}", play: "Jugar →", playCover: "▶ Jugar",
+      vsCpu: "Contra la computadora", isNew: "Nuevo", difficulty: "Dificultad",
+      readNovels: "Lee las novelas en Mundo literario →", rights: "Todos los derechos reservados.",
+      theme: "Cambiar tema claro u oscuro",
     },
     en: {
-      pageTitle: "Games Portal",
-      heroTitle: "🎮 Games Portal",
-      heroSub: "Pick a game and start playing. New ones are added little by little!",
-      search: "Search games…",
-      all: "All",
-      empty: "No games found.",
-      play: "Play ▶",
-      footer: "Made with love",
-      count: ({ n }) => (n === 1 ? "1 game" : `${n} games`),
+      pageTitle: "Game Room · Robert Fader",
+      brand: "Game Room",
+      eyebrow: "Games from the novels",
+      lead: "Play with the characters from Robert Fader's novels. Free, in your browser, nothing to install.",
+      all: "All", novels: "📚 Literary World →",
+      pickOfDay: "✦ Game of the day · {date}", play: "Play →", playCover: "▶ Play",
+      vsCpu: "Vs computer", isNew: "New", difficulty: "Difficulty",
+      readNovels: "Read the novels on Literary World →", rights: "All rights reserved.",
+      theme: "Switch light or dark theme",
     },
     it: {
-      pageTitle: "Portale dei Giochi",
-      heroTitle: "🎮 Portale dei Giochi",
-      heroSub: "Scegli un gioco e inizia a giocare. Se ne aggiungono di nuovi poco a poco!",
-      search: "Cerca un gioco…",
-      all: "Tutti",
-      empty: "Nessun gioco trovato.",
-      play: "Gioca ▶",
-      footer: "Fatto con amore",
-      count: ({ n }) => (n === 1 ? "1 gioco" : `${n} giochi`),
+      pageTitle: "Sala giochi · Robert Fader",
+      brand: "Sala giochi",
+      eyebrow: "Giochi dei romanzi",
+      lead: "Gioca con i personaggi dei romanzi di Robert Fader. Gratis, nel browser, senza installare nulla.",
+      all: "Tutti", novels: "📚 Mondo letterario →",
+      pickOfDay: "✦ Gioco del giorno · {date}", play: "Gioca →", playCover: "▶ Gioca",
+      vsCpu: "Contro il computer", isNew: "Nuovo", difficulty: "Difficoltà",
+      readNovels: "Leggi i romanzi su Mondo letterario →", rights: "Tutti i diritti riservati.",
+      theme: "Cambia tema chiaro o scuro",
     },
     ru: {
-      pageTitle: "Портал игр",
-      heroTitle: "🎮 Портал игр",
-      heroSub: "Выберите игру и начинайте играть. Новые игры добавляются постепенно!",
-      search: "Найти игру…",
-      all: "Все",
-      empty: "Игры не найдены.",
-      play: "Играть ▶",
-      footer: "Сделано с любовью",
-      count: ({ n }) => {
-        const d = n % 10, h = n % 100;
-        const w = d === 1 && h !== 11 ? "игра" : d >= 2 && d <= 4 && (h < 12 || h > 14) ? "игры" : "игр";
-        return `${n} ${w}`;
-      },
+      pageTitle: "Игровая · Роберт Фадер",
+      brand: "Игровая",
+      eyebrow: "Игры по романам",
+      lead: "Играйте с героями романов Роберта Фадера. Бесплатно, прямо в браузере, без установки.",
+      all: "Все", novels: "📚 Литературный мир →",
+      pickOfDay: "✦ Игра дня · {date}", play: "Играть →", playCover: "▶ Играть",
+      vsCpu: "Против компьютера", isNew: "Новинка", difficulty: "Сложность",
+      readNovels: "Читайте романы в «Литературном мире» →", rights: "Все права защищены.",
+      theme: "Светлая или тёмная тема",
     },
   });
 
-  const lista = document.getElementById("lista");
-  const buscar = document.getElementById("buscar");
-  const filtros = document.getElementById("filtros");
-  const vacio = document.getElementById("vacio");
-  const total = document.getElementById("total");
-
-  let categoria = "todos";
-  const cats = ["todos", ...new Set(GAMES.map((g) => g.categoria))];
-
-  function normalizar(s) {
-    return String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
-  }
+  const $ = (id) => document.getElementById(id);
+  const t = (k, v) => I18N.t(k, v);
+  const pick = (o) => I18N.pick(o);
+  const LIT = "https://luisfader.github.io/litmir/";
+  let cat = "todos";
 
   function esc(s) {
     return String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
   }
 
-  function pintarFiltros() {
-    filtros.innerHTML = "";
-    if (cats.length <= 2) return;
-    cats.forEach((c) => {
-      const b = document.createElement("button");
-      b.textContent = c === "todos" ? I18N.t("all") : I18N.pick(CATEGORIAS[c]) || c;
-      b.className = "chip" + (c === categoria ? " activo" : "");
-      b.addEventListener("click", () => {
-        categoria = c;
-        pintarFiltros();
-        pintar();
-      });
-      filtros.appendChild(b);
-    });
+  /* Idiomas, como en Mundo literario: códigos en la cabecera */
+  function renderLangs() {
+    $("langs").innerHTML = I18N.LANGS.map((l) =>
+      `<button data-l="${l.code}" class="${I18N.lang === l.code ? "on" : ""}" title="${l.label}" aria-label="${l.label}">${l.code.toUpperCase()}</button>`).join("");
   }
-
-  function pintar() {
-    total.textContent = I18N.t("count", { n: GAMES.length });
-    const q = normalizar(buscar.value.trim());
-    const visibles = GAMES.filter((g) => {
-      if (categoria !== "todos" && g.categoria !== categoria) return false;
-      // Busca en todos los idiomas, así se encuentra el juego aunque se escriba en otro
-      const texto = [...Object.values(g.titulo), ...Object.values(g.descripcion)].join(" ");
-      return normalizar(texto).includes(q);
-    });
-    lista.innerHTML = "";
-    visibles.forEach((g) => {
-      const a = document.createElement("a");
-      a.className = "card";
-      a.href = `games/${g.id}/`;
-      a.style.setProperty("--c", g.color || "#7c5cff");
-      const arte = g.imagen
-        ? `<img src="${esc(g.imagen)}" alt="" loading="lazy">`
-        : esc(g.emoji);
-      a.innerHTML = `
-        <div class="card-emoji">${arte}</div>
-        <div class="card-body">
-          <span class="card-cat">${esc(I18N.pick(CATEGORIAS[g.categoria]) || "")}</span>
-          <h2>${esc(I18N.pick(g.titulo))}</h2>
-          <p>${esc(I18N.pick(g.descripcion))}</p>
-        </div>
-        <span class="card-play">${esc(I18N.t("play"))}</span>`;
-      lista.appendChild(a);
-    });
-    vacio.hidden = visibles.length > 0;
-  }
-
-  I18N.mount(document.getElementById("lang"));
-  I18N.onChange(() => {
-    pintarFiltros();
-    pintar();
+  $("langs").addEventListener("click", (e) => {
+    const b = e.target.closest("button");
+    if (b) I18N.set(b.dataset.l);
   });
-  buscar.addEventListener("input", pintar);
+
+  /* Tema claro / oscuro */
+  function isDark() {
+    const th = document.documentElement.dataset.theme;
+    if (th) return th === "dark";
+    return matchMedia("(prefers-color-scheme: dark)").matches;
+  }
+  function renderTheme() { $("themeBtn").textContent = isDark() ? "☀" : "☾"; }
+  $("themeBtn").addEventListener("click", () => {
+    const next = isDark() ? "light" : "dark";
+    document.documentElement.dataset.theme = next;
+    try { localStorage.setItem("portal-theme", next); } catch (e) {}
+    renderTheme();
+  });
+
+  /* Categorías */
+  function renderPills() {
+    const cats = ["todos", ...new Set(GAMES.map((g) => g.categoria))];
+    $("pills").innerHTML =
+      cats.map((c) => `<button class="pill ${c === cat ? "on" : ""}" data-c="${c}">${esc(c === "todos" ? t("all") : pick(CATEGORIAS[c]))}</button>`).join("") +
+      `<a class="pill" href="${LIT}">${esc(t("novels"))}</a>`;
+  }
+  $("pills").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-c]");
+    if (!b) return;
+    cat = b.dataset.c;
+    renderPills();
+    renderGrid();
+  });
+
+  /* Juego del día: cambia cada día, igual que la recomendación del día de las novelas */
+  function renderPick() {
+    const now = new Date();
+    const day = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 864e5);
+    const g = GAMES[day % GAMES.length];
+    let date = "";
+    try { date = new Intl.DateTimeFormat(I18N.lang, { day: "numeric", month: "long" }).format(now); } catch (e) {}
+    $("pick").innerHTML = `
+      <a href="games/${g.id}/"><img src="${esc(g.portada || g.imagen)}" alt="${esc(pick(g.titulo))}"></a>
+      <div>
+        <p class="eb">${esc(t("pickOfDay", { date }))}</p>
+        <h2>${esc(pick(g.titulo))}</h2>
+        <p class="d">${esc(pick(g.descripcion))}</p>
+        <a class="go" href="games/${g.id}/">${esc(t("play"))}</a>
+      </div>`;
+  }
+
+  function renderGrid() {
+    const list = GAMES.filter((g) => cat === "todos" || g.categoria === cat);
+    $("grid").innerHTML = list.map((g) => {
+      const d = g.dificultad || 1;
+      return `<a class="game" href="games/${g.id}/">
+        <div class="cover">
+          <img src="${esc(g.portada || g.imagen)}" alt="" loading="lazy">
+          <span class="play">${esc(t("playCover"))}</span>
+        </div>
+        <h3>${esc(pick(g.titulo))}</h3>
+        <span class="meta">${esc(pick(CATEGORIAS[g.categoria]))}${g.meta ? " · " + esc(pick(g.meta)) : ""}</span>
+        <p class="desc">${esc(pick(g.descripcion))}</p>
+        <div class="tags">
+          ${g.rival ? `<span class="tag cpu">${esc(t("vsCpu"))}</span>` : ""}
+          ${g.nuevo ? `<span class="tag new">${esc(t("isNew"))}</span>` : ""}
+        </div>
+        <div class="diff" title="${esc(t("difficulty"))}"><span>${esc(t("difficulty"))}</span>
+          <span class="s">${"★".repeat(d)}<i>${"★".repeat(5 - d)}</i></span></div>
+      </a>`;
+    }).join("");
+  }
+
+  function renderAll() {
+    renderLangs();
+    renderPills();
+    renderPick();
+    renderGrid();
+    $("litLink").href = LIT;
+  }
+
+  I18N.onChange(renderAll);
   I18N.apply();
-  pintarFiltros();
-  pintar();
+  renderTheme();
+  renderAll();
 })();
